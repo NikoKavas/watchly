@@ -23,8 +23,10 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
 
+  // Debounce the search term input to limit API calls
   useDebounce(() => { setDebouncedSearchTerm(searchTerm) }, 500, [searchTerm])
 
+  // Function to fetch movies from the API
   const fetchMovies = async (query = '') => {
     setIsLoading(true)
     setErrorMsg('')

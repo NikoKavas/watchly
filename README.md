@@ -29,6 +29,10 @@ The application emphasizes performance, clean code, and responsive design — de
 - Each movie card displays the title, rating, genre, and release details.
 
 ### 🔍 **Search Functionality**
+- Real-time movie search with **debouncing** to limit API requests and improve performance.  
+- User searches are logged in Appwrite for analytics and trend tracking.
+
+### 📈 **Custom Trending Algorithm**
 Unlike traditional apps that rely solely on TMDB’s global popularity rankings, **Watchly** features a **custom-built trending algorithm**.  
 Each time a user searches for a movie, the app:
 1. Records the search term in the Appwrite database (`metrics` table).
@@ -36,9 +40,6 @@ Each time a user searches for a movie, the app:
 3. Automatically recalculates which movies are the **most-searched** across all users.  
 
 The top five movies with the highest search count are displayed as **Trending Movies**, making the section fully **user-driven** and reflective of actual community interest.
-
-### 📈 **Custom Trending Algorithm**
-- Dynamically fetches and ranks movies by popularity to display what’s trending globally.
 
 ### 🎨 **Modern UI/UX**
 - A sleek dark-themed interface designed with **TailwindCSS**.  

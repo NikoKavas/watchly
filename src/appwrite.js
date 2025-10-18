@@ -33,11 +33,19 @@ export const updateSearchCount = async (searchTerm, movie) => {
                 poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`
             })
         }
-
     } catch (error) {
         console.error(error)
     }
-    
-    
-    
 }
+
+export const getTrendingMovies = async () => {
+        try {
+            const result = await database.listDocuments(DATABASE_ID, TABLE_ID, [
+                Query.orderDesc('count'),
+                Query.limit(5)
+            ])
+            return result.documents
+        } catch (error) {
+            console.error(error)
+        }
+    }

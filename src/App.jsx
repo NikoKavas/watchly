@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Search from './components/search.jsx'
 import Spinner from './components/Spinner.jsx'
 import MovieCard from './components/MovieCard.jsx'
@@ -19,23 +19,29 @@ const API_OPTIONS = {
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [errorMsg, setErrorMsg] = useState('')
-  const [movieList, setMovieList] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  
+  const [movieList, setMovieList] = useState([])
+
+  const [errorMsg, setErrorMsg] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [page, setPage] = useState(1)
   const [trendingMovies, setTrendingMovies] = useState([])
+
+  const allMoviesRef = useRef(null)
 
   // Debounce the search term input to limit API calls
   useDebounce(() => { setDebouncedSearchTerm(searchTerm) }, 1000, [searchTerm])
 
   // Function to fetch movies from the API
-  const fetchMovies = async (query = '') => {
+  const fetchMovies = async (query = '', page = 1) => {
     setIsLoading(true)
     setErrorMsg('')
     try {
       const endpoint = query 
-      ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-      : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+      ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`
+      : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc&page=${page}`
 
       const response = await fetch(endpoint, API_OPTIONS)
 
@@ -75,12 +81,14 @@ const App = () => {
   }
 
   useEffect(() => {
-    fetchMovies(debouncedSearchTerm)
-  }, [debouncedSearchTerm]);
+    fetchMovies(debouncedSearchTerm, page)
+  }, [debouncedSearchTerm, page]);
 
   useEffect(() => {
     loadTrendingMovies()
   }, []);
+
+
 
   return (
     <main>
@@ -110,7 +118,7 @@ const App = () => {
         </section>
         )}
 
-        <section className='all-movies'>
+        <section className='all-movies' ref={allMoviesRef}>
           <h2>All Movies</h2>
 
           {isLoading ? (
@@ -118,12 +126,35 @@ const App = () => {
           ) : errorMsg ? (
             <p className='text-red-500'>{errorMsg}</p>
           ) : (
+            <>
             <ul>
             {movieList.map((movie) => (
                 <MovieCard key={movie.id} movie={movie} />
             ))}
             </ul>
-          )}
+
+             <div className='flex justify-center items-center gap-4 mt-8'>
+            <button
+              className='pagination-btn'
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Previous
+            </button>
+            <span className='text-light-200'>Page {page}</span>
+            <button
+              className='pagination-btn'
+              onClick={() => {
+                setPage((prev) => prev + 1)
+                allMoviesRef.current?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              Next
+            </button>
+          </div>
+        </>
+
+      )}
         </section>
 
       </div>

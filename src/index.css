@@ -142,6 +142,18 @@
       @apply text-gray-100 font-medium text-base;
     }
   }
+
+    .pagination-btn {
+    @apply px-4 py-2 rounded-lg text-white font-sans bg-light-100/10 transition-all duration-200;
+  }
+
+  .pagination-btn:hover:not(:disabled) {
+    @apply bg-light-200/20 shadow-[0_0_10px_rgba(168,181,219,0.4)];
+  }
+
+  .pagination-btn:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
 }
 
 @utility text-gradient {

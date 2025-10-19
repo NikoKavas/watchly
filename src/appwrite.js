@@ -42,6 +42,7 @@ export const getTrendingMovies = async () => {
         try {
             const result = await database.listDocuments(DATABASE_ID, TABLE_ID, [
                 Query.orderDesc('count'),
+                Query.orderDesc('$createdAt'),
                 Query.limit(5)
             ])
             return result.documents

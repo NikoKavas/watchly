@@ -56,10 +56,15 @@ const App = () => {
         setMovieList([])
         return;
       }
-      setMovieList(data.results || [])
 
-      if (query && data.results.length > 0) {
-        await updateSearchCount(query, data.results[0])
+      const sortedResults = query
+        ? data.results.sort((a, b) => b.popularity - a.popularity)
+        : data.results
+
+      setMovieList(sortedResults || [])
+
+      if (query && sortedResults.length > 0) {
+        await updateSearchCount(query, sortedResults[0])
       }
 
     } catch (error) {

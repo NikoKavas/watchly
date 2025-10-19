@@ -64,7 +64,7 @@ const App = () => {
       setMovieList(sortedResults || [])
 
       if (query && sortedResults.length > 0) {
-        await updateSearchCount(query, sortedResults[0])
+        await updateSearchCount(sortedResults[0])
       }
 
     } catch (error) {

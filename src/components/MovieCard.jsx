@@ -1,9 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const MovieCard = ({movie: 
-    {title, vote_average, poster_path, release_date, original_language}
+    {id, title, vote_average, poster_path, release_date, original_language}
 }) => {
   return (
+    <Link to={`/movie/${id}`} className="block group relative">
     <div className='movie-card'>
       <img src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'no-movie.png'} alt={title} />
 
@@ -23,8 +25,8 @@ const MovieCard = ({movie:
             <p className='year'>{release_date ? release_date.split('-')[0] : 'N/A'}</p>
         </div>
     </div>
-      
     </div>
+    </Link>
   )
 }
 

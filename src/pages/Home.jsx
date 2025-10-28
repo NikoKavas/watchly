@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner.jsx'
 import MovieCard from '../components/MovieCard.jsx'
 import { useDebounce } from 'react-use'
 import { updateSearchCount, getTrendingMovies } from '../appwrite.js'
+import { Link } from 'react-router-dom'
 
 const API_BASE_URL = 'https://api.themoviedb.org/3'
 
@@ -116,8 +117,10 @@ const Home = () => {
             {trendingMovies.map((movie, index) => (
               <li key={movie.$id}>
                 <p>{index + 1}</p>
+                <Link to={`/movie/${movie.movie_id}`}>
                 <img src={movie.poster_url} alt={movie.searchTerm} />
-                </li>
+                </Link>
+              </li>
             ))}
           </ul>
         </section>

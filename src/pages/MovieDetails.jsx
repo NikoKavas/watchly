@@ -26,7 +26,7 @@ export default function MovieDetails() {
 
   return (
     <div className="max-w-5xl mx-auto p-6 text-gray-100">
-      <Link to="/" className="text-gold hover:underline">← Back</Link>
+      <Link to="/" className="pagination-btn">← Back</Link>
 
       <div className="flex flex-col items-center justify-center text-center min-h-screen space-y-6 fade-in">
         <img

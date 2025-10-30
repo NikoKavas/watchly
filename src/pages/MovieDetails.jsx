@@ -44,59 +44,68 @@ export default function MovieDetails() {
   if (!movie) return <p className="text-center text-gray-400 mt-20">Loading...</p>;
 
   return (
-    <div className="movie-details">
-      <Link to="/" className="pagination-btn">← Back</Link>
-
-      <div className="movie-details-header">
-        <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movie.title}
-          className="movie-poster"
-        />
-
-        <div className="movie-content">
-          <h1 className="movie-title">{movie.title}</h1>
-
-          <div className="movie-meta">
-            <span><img src="/star.svg" alt="Star" /> {movie.vote_average?.toFixed(1)}</span>
-            <span>📅 {movie.release_date}</span>
-            <span>🎬 {movie.runtime} min</span>
-            <span>💬 {movie.original_language?.toUpperCase()}</span>
-          </div>
-
-          {movie.tagline && (
-            <p className="movie-tagline">“{movie.tagline}”</p>
-          )}
-
-          <p className="movie-overview">{movie.overview}</p>
-
-          <div className="genre-tags">
-            {movie.genres?.map((g) => (
-              <span key={g.id}>{g.name}</span>
-            ))}
-          </div>
-        </div>
+    <div className="md-page">
+      <div className="md-topbar">
+        <Link to="/" className="md-back">
+          <span className="md-back-icon">←</span>
+          <span>Back</span>
+        </Link>
       </div>
 
-      {trailerKey && (
-        <div className="trailer-section">
-          <h3>🎬 Watch Trailer</h3>
-          <div className="trailer-frame">
-            <iframe
-              src={`https://www.youtube.com/embed/${trailerKey}`}
-              title="Movie Trailer"
-              allowFullScreen
-              className="w-full h-full border-0"
-            ></iframe>
+      <div className="md-card">
+        <div className="md-hero">
+          <div>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              className="md-poster"
+            />
+          </div>
+          <div>
+            <div className="md-title-row">
+              <h1 className="md-title">{movie.title}</h1>
+              <span className="md-rating">⭐ {movie.vote_average?.toFixed(1)}</span>
+            </div>
+            <div className="md-meta">
+              <span className="md-chip">📅 {movie.release_date}</span>
+              <span className="md-chip">⏱ {movie.runtime} min</span>
+              <span className="md-chip">🌐 {movie.original_language?.toUpperCase()}</span>
+            </div>
+
+            {movie.tagline && <p className="md-tagline">“{movie.tagline}”</p>}
+
+            <p className="md-overview">{movie.overview}</p>
+
+            <div className="md-genres">
+              {movie.genres?.map((g) => (
+                <span key={g.id} className="md-genre-chip">{g.name}</span>
+              ))}
+            </div>
           </div>
         </div>
-      )}
 
-      <div className="movie-info">
-        <p><span>Release Date:</span> {movie.release_date}</p>
-        <p><span>Status:</span> {movie.status}</p>
-        <p><span>Budget:</span> ${movie.budget?.toLocaleString() || 'N/A'}</p>
-        <p><span>Revenue:</span> ${movie.revenue?.toLocaleString() || 'N/A'}</p>
+        {trailerKey && (
+          <div className="md-trailer">
+            <div className="md-section-title">
+              <span className="md-section-icon">🎬</span>
+              <h3>Watch Trailer</h3>
+            </div>
+            <div className="md-trailer-frame">
+              <iframe
+                src={`https://www.youtube.com/embed/${trailerKey}`}
+                title="Movie Trailer"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        )}
+
+        <div className="md-info-grid">
+          <div className="md-info-item"><span>Release date</span><b>{movie.release_date}</b></div>
+          <div className="md-info-item"><span>Status</span><b>{movie.status}</b></div>
+          <div className="md-info-item"><span>Budget</span><b>${movie.budget?.toLocaleString() || 'N/A'}</b></div>
+          <div className="md-info-item"><span>Revenue</span><b>${movie.revenue?.toLocaleString() || 'N/A'}</b></div>
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const MovieCard = ({movie:
   return (
     <Link to={`/movie/${id}`} className="block group relative">
     <div className='movie-card'>
-      <img src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'no-movie.png'} alt={title} />
+      <img loading="lazy" src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'no-movie.png'} alt={title} />
 
     <div className='mt-4'>
         <h3>{title}</h3>
